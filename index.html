@@ -1,1 +1,336 @@
+STICKY NOTE AGENDA AM — PAKET KODE LENGKAP
+============================================================
+
+
+############################################################
+FILE: index.html
+############################################################
+
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#6657e8">
+<title>Sticky Note Agenda AM</title>
+<style>
+:root{--bg:#f5f6fb;--card:#fff;--ink:#202238;--muted:#747891;--line:#e8e9f2;--purple:#6657e8;--purple2:#eeeaff;--green:#16865b;--red:#d34848;--shadow:0 8px 28px #25264a0d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1100px;margin:auto;padding:22px 16px 48px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}.brand{display:flex;gap:12px;align-items:center}.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#7868f5,#4c3fc1);display:grid;place-items:center;color:white;font-size:23px;box-shadow:0 8px 20px #6657e833}.brand h1{font-size:clamp(20px,3vw,28px);margin:0}.brand p{margin:4px 0 0;color:var(--muted);font-size:13px}.chip{border:1px solid var(--line);background:white;border-radius:999px;padding:9px 12px;color:var(--muted);font-size:12px;white-space:nowrap}.hero{background:linear-gradient(120deg,#6556e8,#8b69ec);border-radius:24px;padding:25px;color:#fff;box-shadow:0 14px 34px #6657e82b;margin-bottom:20px}.hero h2{font-size:clamp(23px,4vw,32px);margin:0 0 8px}.hero p{margin:0;line-height:1.6;color:#f0edff;max-width:650px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}.stat{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:15px;box-shadow:var(--shadow)}.stat small{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:25px;margin-top:7px}.layout{display:grid;grid-template-columns:minmax(280px,360px) 1fr;gap:18px;align-items:start}.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}.panel h3{margin:0 0 16px;font-size:17px}.field{margin-bottom:13px}.field label{display:block;font-size:12px;font-weight:700;color:#555a74;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;border:1px solid #dfe1ed;background:#fff;border-radius:11px;padding:11px 12px;color:var(--ink);outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px #6657e81a}.field textarea{min-height:78px;resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:12px;padding:12px 15px;font-weight:750}.primary{background:var(--purple);color:white;width:100%}.primary:disabled{opacity:.55;cursor:wait}.secondary{background:var(--purple2);color:#5144c5}.outline{background:white;border:1px solid var(--line);color:var(--ink)}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}.toolbar h3{margin:0}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters button{padding:8px 11px;border:1px solid var(--line);background:white;color:var(--muted);border-radius:999px;font-size:12px}.filters button.active{background:var(--purple2);color:#5144c5;border-color:#d8d1ff}.agenda-list{display:grid;gap:11px}.event{border:1px solid var(--line);border-left:5px solid #9a8cff;border-radius:15px;padding:15px;display:grid;grid-template-columns:66px 1fr;gap:12px;background:#fff}.event[data-kind="Meeting"]{border-left-color:#8a79f6}.event[data-kind="Training"]{border-left-color:#20a77b}.event[data-kind="Walkthrough"]{border-left-color:#e5a332}.event[data-kind="Personal"]{border-left-color:#e27a9a}.datebox{border-radius:12px;background:#f4f2ff;text-align:center;padding:10px 5px;height:max-content}.datebox b{font-size:23px;display:block;color:#5144c5}.datebox span{font-size:10px;font-weight:800;color:#77708f;text-transform:uppercase}.event h4{margin:0 0 6px;font-size:15px;overflow-wrap:anywhere}.meta{font-size:12px;color:var(--muted);line-height:1.6}.desc{font-size:13px;line-height:1.5;margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere}.event-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.event-actions button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;font-size:11px;font-weight:700}.event-actions .done{color:var(--green)}.empty{padding:32px 12px;text-align:center;color:var(--muted);border:1px dashed #d9dbea;border-radius:14px}.empty strong{display:block;color:var(--ink);margin-bottom:6px}.notice{font-size:12px;line-height:1.6;padding:12px 13px;border-radius:12px;background:#fff8e8;color:#765619;margin-top:14px}.status{font-size:12px;color:var(--muted);margin-top:10px;min-height:18px}.foot{text-align:center;color:var(--muted);font-size:11px;margin-top:22px}.hidden{display:none!important}
+@media(max-width:780px){.app{padding:15px 12px 32px}.layout{grid-template-columns:1fr}.top{align-items:flex-start}.chip{white-space:normal;text-align:center}.hero{padding:21px;border-radius:20px}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:22px}.panel{padding:16px}.event{grid-template-columns:55px 1fr;padding:12px;gap:10px}.datebox{padding:9px 4px}.datebox b{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><div class="logo">✦</div><div><h1>Sticky Note Agenda AM</h1><p>Semua agenda penting, dalam satu tempat.</p></div></div>
+    <div class="chip">🗓️ Zona waktu: WIB (Jakarta)</div>
+  </header>
+  <section class="hero"><h2>Jangan sampai ada agenda terlewat.</h2><p>Catat meeting, training, walkthrough, dan tugas penting. Agenda disimpan ke Google Calendar dengan pengingat popup H-1.</p></section>
+  <section class="stats">
+    <div class="stat"><small>Agenda mendatang</small><strong id="countUpcoming">—</strong></div>
+    <div class="stat"><small>Agenda hari ini</small><strong id="countToday">—</strong></div>
+    <div class="stat"><small>Agenda selesai</small><strong id="countDone">—</strong></div>
+  </section>
+  <div class="layout">
+    <section class="panel">
+      <h3>＋ Tambah agenda</h3>
+      <div class="field"><label for="appPin">PIN akses pribadi *</label><input id="appPin" type="password" autocomplete="current-password" required placeholder="Masukkan PIN yang kamu atur di Apps Script"></div>
+      <form id="agendaForm">
+        <div class="field"><label for="title">Judul agenda *</label><input id="title" required maxlength="120" placeholder="Contoh: Meeting Area Manager"></div>
+        <div class="field"><label for="kind">Jenis agenda</label><select id="kind"><option>Meeting</option><option>Training</option><option>Walkthrough</option><option>Evaluasi Store</option><option>Follow Up</option><option>Personal</option><option>Lainnya</option></select></div>
+        <div class="two">
+          <div class="field"><label for="date">Tanggal *</label><input id="date" type="date" required></div>
+          <div class="field"><label for="time">Jam mulai *</label><input id="time" type="time" value="09:00" required></div>
+        </div>
+        <div class="field"><label for="duration">Durasi</label><select id="duration"><option value="30">30 menit</option><option value="60" selected>1 jam</option><option value="90">1,5 jam</option><option value="120">2 jam</option><option value="180">3 jam</option><option value="240">4 jam</option></select></div>
+        <div class="field"><label for="location">Lokasi / link meeting</label><input id="location" maxlength="250" placeholder="Contoh: Store Menteng / Google Meet"></div>
+        <div class="field"><label for="notes">Catatan / persiapan</label><textarea id="notes" maxlength="2000" placeholder="Bawa laporan sales, data waste, materi training..."></textarea></div>
+        <button class="btn primary" id="saveBtn" type="submit">Simpan agenda + pengingat H-1</button>
+        <div class="status" id="formStatus" role="status"></div>
+      </form>
+      <div class="notice"><b>Pengingat gratis:</b> notifikasi H-1 dikelola Google Calendar, bukan timer website. Pastikan aplikasi Google Calendar di HP sudah mengaktifkan notifikasi. Pengingat popup akan disetel 24 jam sebelum agenda.</div>
+    </section>
+    <section class="panel">
+      <div class="toolbar"><h3>Agenda kamu</h3><button class="btn secondary" id="refreshBtn" type="button">↻ Muat ulang</button></div>
+      <div class="filters" id="filters">
+        <button class="active" data-filter="upcoming">Mendatang</button><button data-filter="today">Hari ini</button><button data-filter="all">Semua</button>
+      </div>
+      <div style="height:13px"></div>
+      <div id="agendaList" class="agenda-list"><div class="empty"><strong>Hubungkan Google Calendar</strong>Masukkan URL Web App Apps Script pada konfigurasi untuk mulai menggunakan agenda.</div></div>
+      <div class="status" id="listStatus" role="status"></div>
+    </section>
+  </div>
+  <div class="foot">Sticky Note Agenda AM · GitHub Pages + Google Calendar · Dirancang untuk penggunaan mobile</div>
+</div>
+<script>
+/*
+SETUP: Ganti APPS_SCRIPT_URL dengan URL Web App dari Google Apps Script.
+Contoh: https://script.google.com/macros/s/AKfycb.../exec
+*/
+const APPS_SCRIPT_URL = "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE";
+let events = [];
+let activeFilter = "upcoming";
+const $ = id => document.getElementById(id);
+const fmtDate = value => new Intl.DateTimeFormat("id-ID",{weekday:"short",day:"2-digit",month:"short",year:"numeric",timeZone:"Asia/Jakarta"}).format(new Date(value));
+const fmtTime = value => new Intl.DateTimeFormat("id-ID",{hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"Asia/Jakarta"}).format(new Date(value));
+const dayKey = value => { const d=new Date(value); return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Jakarta",year:"numeric",month:"2-digit",day:"2-digit"}).format(d); };
+const todayKey = () => dayKey(new Date());
+function api(action, params={}) {
+  return new Promise((resolve,reject)=>{
+    if(!APPS_SCRIPT_URL.startsWith("https://script.google.com/macros/s/") || APPS_SCRIPT_URL.includes("PASTE_")) {
+      reject(new Error("URL Apps Script belum diatur. Ikuti README.txt."));
+      return;
+    }
+    const cb="agendaCb_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+    const script=document.createElement("script");
+    const timeout=setTimeout(()=>{cleanup();reject(new Error("Waktu koneksi habis. Periksa URL/deployment Apps Script."));},15000);
+    function cleanup(){clearTimeout(timeout);delete window[cb];script.remove();}
+    window[cb]=data=>{cleanup();if(data&&data.ok)resolve(data);else reject(new Error(data?.error||"Permintaan gagal."));};
+    const pin = $("appPin") ? $("appPin").value.trim() : "";
+    const q=new URLSearchParams({...params,pin,action,callback:cb});
+    script.src=APPS_SCRIPT_URL+"?"+q.toString();
+    script.onerror=()=>{cleanup();reject(new Error("Gagal menghubungi Apps Script. Periksa deployment dan koneksi."));};
+    document.body.appendChild(script);
+  });
+}
+function render(){
+  const now=Date.now(), today=todayKey();
+  $("countUpcoming").textContent=events.filter(e=>new Date(e.start).getTime()>=now&&!e.done).length;
+  $("countToday").textContent=events.filter(e=>dayKey(e.start)===today&&!e.done).length;
+  $("countDone").textContent=events.filter(e=>e.done).length;
+  let filtered=events.slice().sort((a,b)=>new Date(a.start)-new Date(b.start));
+  if(activeFilter==="upcoming") filtered=filtered.filter(e=>new Date(e.start).getTime()>=now&&!e.done);
+  if(activeFilter==="today") filtered=filtered.filter(e=>dayKey(e.start)===today);
+  const list=$("agendaList");
+  if(!filtered.length){list.innerHTML='<div class="empty"><strong>Belum ada agenda di tampilan ini</strong>Tambahkan agenda baru atau pilih filter lainnya.</div>';return;}
+  list.innerHTML="";
+  filtered.forEach(e=>{
+    const start=new Date(e.start), d=start.toLocaleDateString("id-ID",{timeZone:"Asia/Jakarta",day:"2-digit"}), m=start.toLocaleDateString("id-ID",{timeZone:"Asia/Jakarta",month:"short"});
+    const card=document.createElement("article");card.className="event";card.dataset.kind=e.kind||"Lainnya";
+    const datebox=document.createElement("div");datebox.className="datebox";datebox.innerHTML=`<b>${d}</b><span>${m}</span>`;
+    const body=document.createElement("div");
+    const h=document.createElement("h4");h.textContent=e.title;
+    const meta=document.createElement("div");meta.className="meta";meta.textContent=`${e.kind||"Agenda"} · ${fmtDate(e.start)} · ${fmtTime(e.start)}–${fmtTime(e.end)}${e.location?" · "+e.location:""}`;
+    body.append(h,meta);
+    if(e.notes){const desc=document.createElement("div");desc.className="desc";desc.textContent=e.notes;body.append(desc);}
+    const actions=document.createElement("div");actions.className="event-actions";
+    const cal=document.createElement("button");cal.textContent="Buka di Google Calendar";cal.onclick=()=>window.open("https://calendar.google.com/calendar/u/0/r/day/"+dayKey(e.start).replaceAll("-","/"),"_blank","noopener");
+    const del=document.createElement("button");del.textContent="Hapus agenda";del.onclick=async()=>{if(!confirm(`Hapus agenda "${e.title}" dari Google Calendar?`))return;try{await api("delete",{eventId:e.id});await loadEvents();$("listStatus").textContent="Agenda dihapus.";}catch(err){$("listStatus").textContent=err.message;}};
+    actions.append(cal,del);body.append(actions);card.append(datebox,body);list.append(card);
+  });
+}
+async function loadEvents(){
+  $("listStatus").textContent="Memuat agenda dari Google Calendar…";
+  try{const data=await api("list");events=data.events||[];render();$("listStatus").textContent="Agenda tersinkron dengan Google Calendar.";}
+  catch(err){$("listStatus").textContent=err.message;$("agendaList").innerHTML='<div class="empty"><strong>Belum terhubung</strong>'+escapeHtml(err.message)+'</div>';}
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+$("agendaForm").addEventListener("submit",async ev=>{
+  ev.preventDefault();
+  const title=$("title").value.trim(), date=$("date").value, time=$("time").value;
+  if(!title||!date||!time)return;
+  const startLocal=new Date(`${date}T${time}:00+07:00`);
+  if(Number.isNaN(startLocal.getTime())){ $("formStatus").textContent="Tanggal atau jam tidak valid.";return;}
+  const endLocal=new Date(startLocal.getTime()+Number($("duration").value)*60000);
+  if(startLocal.getTime()<Date.now()-60000){$("formStatus").textContent="Pilih waktu agenda yang belum lewat.";return;}
+  const btn=$("saveBtn");btn.disabled=true;btn.textContent="Menyimpan…";$("formStatus").textContent="";
+  try{
+    await api("create",{title,kind:$("kind").value,start:startLocal.toISOString(),end:endLocal.toISOString(),location:$("location").value.trim(),notes:$("notes").value.trim()});
+    $("formStatus").textContent="Agenda tersimpan di Google Calendar. Pengingat H-1 disetel.";
+    $("agendaForm").reset();$("time").value="09:00";$("date").value=defaultDate();await loadEvents();
+  }catch(err){$("formStatus").textContent=err.message;}
+  finally{btn.disabled=false;btn.textContent="Simpan agenda + pengingat H-1";}
+});
+function defaultDate(){const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10);}
+$("date").value=defaultDate();
+$("refreshBtn").addEventListener("click",loadEvents);
+$("filters").addEventListener("click",e=>{const b=e.target.closest("button[data-filter]");if(!b)return;activeFilter=b.dataset.filter;document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("active",x===b));render();});
+loadEvents();
+</script>
+</body>
+</html>
+
+
+
+############################################################
+FILE: Code.gs
+############################################################
+
+/**
+ * Sticky Note Agenda AM - Google Apps Script backend
+ * Menyimpan agenda di Google Calendar dan membuat pengingat popup H-1.
+ *
+ * DEPLOY:
+ * 1. Buka https://script.google.com/ lalu buat New project.
+ * 2. Tempel kode ini ke Code.gs.
+ * 3. Deploy > New deployment > Web app.
+ * 4. Execute as: Me. Who has access: Anyone.
+ * 5. Authorize akses Google Calendar, lalu salin URL /exec ke index.html.
+ *
+ * Catatan: Siapa pun yang mengetahui URL Web App dapat membuat/menghapus agenda
+ * pada kalender pemilik. Jangan bagikan URL ini secara publik. Untuk penggunaan
+ * pribadi, gunakan URL hanya di repository private atau pertimbangkan autentikasi.
+ */
+const TZ = 'Asia/Jakarta';
+const REMINDER_MINUTES = 24 * 60;
+
+function doGet(e) {
+  const p = (e && e.parameter) || {};
+  const callback = String(p.callback || '');
+  if (!/^[A-Za-z_$][0-9A-Za-z_$]*$/.test(callback)) {
+    return ContentService.createTextOutput('Invalid callback').setMimeType(ContentService.MimeType.TEXT);
+  }
+  let result;
+  try {
+    const expectedPin = PropertiesService.getScriptProperties().getProperty('APP_PIN');
+    if (!expectedPin) throw new Error('PIN backend belum disetel oleh pemilik. Ikuti README.txt.');
+    if (String(p.pin || '') !== expectedPin) throw new Error('PIN salah. Periksa PIN akses pribadi.');
+    const action = String(p.action || 'list');
+    if (action === 'create') result = createEvent_(p);
+    else if (action === 'list') result = listEvents_();
+    else if (action === 'delete') result = deleteEvent_(p);
+    else throw new Error('Aksi tidak dikenal.');
+    result.ok = true;
+  } catch (err) {
+    result = {ok:false, error:String(err && err.message ? err.message : err)};
+  }
+  return ContentService.createTextOutput(callback + '(' + JSON.stringify(result) + ');')
+    .setMimeType(ContentService.MimeType.JAVASCRIPT);
+}
+
+function createEvent_(p) {
+  const title = String(p.title || '').trim().slice(0, 120);
+  const start = new Date(String(p.start || ''));
+  const end = new Date(String(p.end || ''));
+  if (!title) throw new Error('Judul agenda wajib diisi.');
+  if (isNaN(start.getTime()) || isNaN(end.getTime()) || end <= start) throw new Error('Tanggal/jam agenda tidak valid.');
+  if (start.getTime() < Date.now() - 60000) throw new Error('Waktu agenda sudah lewat.');
+  const kind = String(p.kind || 'Lainnya').slice(0, 60);
+  const location = String(p.location || '').slice(0, 250);
+  const notes = String(p.notes || '').slice(0, 2000);
+  const description = 'Jenis agenda: ' + kind + (notes ? '\n\nCatatan / persiapan:\n' + notes : '') +
+    '\n\nDibuat melalui Sticky Note Agenda AM.';
+  const calendar = CalendarApp.getDefaultCalendar();
+  const event = calendar.createEvent('[' + kind + '] ' + title, start, end, {description, location});
+  // Google Calendar akan menangani notifikasi; aplikasi Calendar di HP harus mengizinkan notifikasi.
+  event.addPopupReminder(REMINDER_MINUTES);
+  return {event: serializeEvent_(event)};
+}
+
+function listEvents_() {
+  const calendar = CalendarApp.getDefaultCalendar();
+  const now = new Date();
+  const from = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const until = new Date(now.getTime() + 180 * 24 * 60 * 60 * 1000);
+  const events = calendar.getEvents(from, until).filter(ev =>
+    ev.getTitle().startsWith('[') && ev.getDescription().includes('Dibuat melalui Sticky Note Agenda AM.')
+  ).map(serializeEvent_);
+  events.sort((a,b) => new Date(a.start) - new Date(b.start));
+  return {events};
+}
+
+function deleteEvent_(p) {
+  const id = String(p.eventId || '');
+  if (!id) throw new Error('ID agenda tidak ditemukan.');
+  const event = CalendarApp.getEventById(id);
+  if (!event) throw new Error('Agenda tidak ditemukan. Muat ulang daftar agenda.');
+  if (!event.getDescription().includes('Dibuat melalui Sticky Note Agenda AM.')) {
+    throw new Error('Agenda ini bukan dibuat oleh Sticky Note Agenda AM, jadi tidak dihapus.');
+  }
+  event.deleteEvent();
+  return {deleted:true};
+}
+
+function serializeEvent_(event) {
+  const description = event.getDescription() || '';
+  const match = description.match(/Jenis agenda: ([^\n]+)/);
+  let notes = '';
+  const noteMatch = description.match(/Catatan \/ persiapan:\n([\s\S]*?)(?:\n\nDibuat melalui Sticky Note Agenda AM\.|$)/);
+  if (noteMatch) notes = noteMatch[1].trim();
+  return {
+    id:event.getId(),
+    title:event.getTitle().replace(/^\[[^\]]+\]\s*/, ''),
+    kind:match ? match[1] : 'Lainnya',
+    start:event.getStartTime().toISOString(),
+    end:event.getEndTime().toISOString(),
+    location:event.getLocation() || '',
+    notes
+  };
+}
+
+
+
+############################################################
+FILE: README.txt
+############################################################
+
+STICKY NOTE AGENDA AM — PANDUAN INSTALASI
+================================================
+
+PENTING TENTANG BIAYA DAN NOTIFIKASI
+- Target biaya Rp0.
+- GitHub Pages meng-host website.
+- Google Apps Script menghubungkan website ke Google Calendar.
+- Agenda disimpan di Google Calendar dan diberi popup reminder 24 jam (H-1).
+- Agar notifikasi muncul di HP, pasang/login ke aplikasi Google Calendar dan aktifkan notifikasi kalender.
+- Ini bukan push notification Firebase. Solusi Calendar dipilih karena penjadwalan H-1 dilakukan oleh Google Calendar tanpa perlu Firebase Cloud Functions berbayar.
+- Tidak ada sistem yang dapat menjamin notifikasi tampil jika notifikasi aplikasi dimatikan, perangkat membatasi aplikasi, atau akun tidak tersinkron.
+
+LANGKAH 1 — BUAT BACKEND GRATIS
+1. Buka https://script.google.com/ dengan akun Google yang akan dipakai untuk agenda.
+2. Klik New project.
+3. Ganti isi Code.gs dengan isi file Code.gs dari paket ini.
+4. Klik Save.
+5. Klik Deploy > New deployment.
+6. Pilih type "Web app".
+7. Execute as: Me.
+8. Who has access: Anyone.
+9. Buka Project Settings (ikon roda gigi) > Script Properties > Add script property.
+10. Buat property bernama APP_PIN dan isi dengan PIN rahasia yang kuat (jangan gunakan PIN ATM atau password penting).
+11. Klik Deploy dan izinkan akses Google Calendar ketika diminta.
+12. Salin URL Web app yang berakhiran /exec.
+
+KEAMANAN
+Web App menggunakan PIN yang disimpan di Script Properties. PIN diminta pada halaman website dan tidak ditanam di file HTML. Jangan membagikan PIN. Endpoint "Anyone" tetap dapat diakses publik, tetapi permintaan agenda harus menyertakan PIN yang benar. Gunakan PIN khusus untuk aplikasi ini, bukan password akun Google.
+
+LANGKAH 2 — HUBUNGKAN WEBSITE
+1. Buka index.html.
+2. Cari baris:
+   const APPS_SCRIPT_URL = "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE";
+3. Ganti teks PASTE... dengan URL Web App yang didapat pada Langkah 1.
+4. Simpan file.
+
+LANGKAH 3 — BUAT REPOSITORY GITHUB
+1. Di GitHub, buat repository baru bernama: sticky-note-agenda-am
+2. Untuk keamanan awal, pilih Private jika ingin menyimpan URL backend langsung di index.html. Perlu diketahui: GitHub Pages pada repository private bergantung pada jenis akun/organisasi dan pengaturan yang tersedia.
+3. Unggah index.html ke root repository. README ini boleh ikut diunggah, tetapi jangan mengunggah Code.gs bila ingin menjaga detail backend tetap terbatas.
+4. Buka Settings > Pages.
+5. Pada Build and deployment, pilih Deploy from a branch.
+6. Pilih branch main dan folder /(root), lalu Save.
+7. Tunggu proses publikasi, kemudian buka URL yang ditampilkan pada halaman Pages.
+
+PENTING: Walau repository private, jika website dipublikasikan melalui konfigurasi yang membuat halaman dapat diakses umum, URL Apps Script yang ditanam dalam JavaScript bisa dilihat dari browser. Untuk penggunaan aman, jangan simpan informasi sensitif pada kalender tersebut. Versi ini paling cocok untuk penggunaan pribadi dengan agenda non-rahasia. Bila perlu akses privat yang kuat, backend perlu autentikasi.
+
+LANGKAH 4 — AKTIFKAN NOTIFIKASI HP
+1. Pasang atau buka Google Calendar di Android.
+2. Login menggunakan akun Google yang sama.
+3. Di Google Calendar > Menu > Settings > General, pastikan Notifications aktif.
+4. Periksa juga pengaturan Android: Settings > Apps > Calendar > Notifications > Allow.
+5. Buat satu agenda percobaan minimal 1 hari ke depan dan pastikan event tampil di Google Calendar.
+6. Untuk menguji notifikasi H-1, buat agenda lebih dari 24 jam ke depan. Reminder yang ditambahkan adalah 24 jam sebelum waktu mulai agenda.
+
+FITUR
+- Dashboard agenda mendatang, agenda hari ini, dan hitungan agenda.
+- Jenis agenda: Meeting, Training, Walkthrough, Evaluasi Store, Follow Up, Personal, Lainnya.
+- Tanggal, jam, durasi, lokasi/link, catatan persiapan.
+- Sinkronisasi daftar agenda yang dibuat melalui aplikasi ini.
+- Hapus agenda yang dibuat melalui aplikasi ini.
+- Responsive untuk HP dan desktop.
+
+BATASAN VERSI AWAL
+- Agenda tersimpan di Google Calendar, bukan Firebase.
+- Reminder H-1 dibuat sebagai popup reminder Google Calendar; pengiriman dan tampilan notifikasi tergantung setelan akun/perangkat.
+- Web App Apps Script memakai URL endpoint. Untuk penggunaan luas atau data sensitif, perlu menambahkan autentikasi dan pembatasan akses.
+
+
 
