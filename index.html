@@ -1,11 +1,3 @@
-STICKY NOTE AGENDA AM — PAKET KODE LENGKAP
-============================================================
-
-
-############################################################
-FILE: index.html
-############################################################
-
 <!doctype html>
 <html lang="id">
 <head>
@@ -56,7 +48,7 @@ FILE: index.html
         <button class="active" data-filter="upcoming">Mendatang</button><button data-filter="today">Hari ini</button><button data-filter="all">Semua</button>
       </div>
       <div style="height:13px"></div>
-      <div id="agendaList" class="agenda-list"><div class="empty"><strong>Hubungkan Google Calendar</strong>Masukkan URL Web App Apps Script pada konfigurasi untuk mulai menggunakan agenda.</div></div>
+      <div id="agendaList" class="agenda-list"><div class="empty"><strong>Hubungkan Google Calendar</strong>Isi URL Web App Apps Script pada konfigurasi HTML, lalu unggah ulang file ini ke GitHub Pages.</div></div>
       <div class="status" id="listStatus" role="status"></div>
     </section>
   </div>
@@ -64,7 +56,7 @@ FILE: index.html
 </div>
 <script>
 /*
-SETUP: Ganti APPS_SCRIPT_URL dengan URL Web App dari Google Apps Script.
+SETUP: Ganti APPS_SCRIPT_URL di bawah dengan URL Web App dari Google Apps Script.
 Contoh: https://script.google.com/macros/s/AKfycb.../exec
 */
 const APPS_SCRIPT_URL = "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE";
@@ -77,8 +69,8 @@ const dayKey = value => { const d=new Date(value); return new Intl.DateTimeForma
 const todayKey = () => dayKey(new Date());
 function api(action, params={}) {
   return new Promise((resolve,reject)=>{
-    if(!APPS_SCRIPT_URL.startsWith("https://script.google.com/macros/s/") || APPS_SCRIPT_URL.includes("PASTE_")) {
-      reject(new Error("URL Apps Script belum diatur. Ikuti README.txt."));
+    if(!APPS_SCRIPT_URL.startsWith("https://script.google.com/macros/s/AKfycbzWHBVo7p_sIaJjeefyuW0zs-N3An53mvSR6g-AwmMPeXEg8AvrYb9TMv-LNFY5s0Hk/exec") || APPS_SCRIPT_URL.includes("PASTE_")) {
+      reject(new Error("URL Apps Script belum diatur. Isi APPS_SCRIPT_URL di bagian konfigurasi kode HTML."));
       return;
     }
     const cb="agendaCb_"+Date.now()+"_"+Math.random().toString(36).slice(2);
@@ -149,188 +141,3 @@ loadEvents();
 </script>
 </body>
 </html>
-
-
-
-############################################################
-FILE: Code.gs
-############################################################
-
-/**
- * Sticky Note Agenda AM - Google Apps Script backend
- * Menyimpan agenda di Google Calendar dan membuat pengingat popup H-1.
- *
- * DEPLOY:
- * 1. Buka https://script.google.com/ lalu buat New project.
- * 2. Tempel kode ini ke Code.gs.
- * 3. Deploy > New deployment > Web app.
- * 4. Execute as: Me. Who has access: Anyone.
- * 5. Authorize akses Google Calendar, lalu salin URL /exec ke index.html.
- *
- * Catatan: Siapa pun yang mengetahui URL Web App dapat membuat/menghapus agenda
- * pada kalender pemilik. Jangan bagikan URL ini secara publik. Untuk penggunaan
- * pribadi, gunakan URL hanya di repository private atau pertimbangkan autentikasi.
- */
-const TZ = 'Asia/Jakarta';
-const REMINDER_MINUTES = 24 * 60;
-
-function doGet(e) {
-  const p = (e && e.parameter) || {};
-  const callback = String(p.callback || '');
-  if (!/^[A-Za-z_$][0-9A-Za-z_$]*$/.test(callback)) {
-    return ContentService.createTextOutput('Invalid callback').setMimeType(ContentService.MimeType.TEXT);
-  }
-  let result;
-  try {
-    const expectedPin = PropertiesService.getScriptProperties().getProperty('APP_PIN');
-    if (!expectedPin) throw new Error('PIN backend belum disetel oleh pemilik. Ikuti README.txt.');
-    if (String(p.pin || '') !== expectedPin) throw new Error('PIN salah. Periksa PIN akses pribadi.');
-    const action = String(p.action || 'list');
-    if (action === 'create') result = createEvent_(p);
-    else if (action === 'list') result = listEvents_();
-    else if (action === 'delete') result = deleteEvent_(p);
-    else throw new Error('Aksi tidak dikenal.');
-    result.ok = true;
-  } catch (err) {
-    result = {ok:false, error:String(err && err.message ? err.message : err)};
-  }
-  return ContentService.createTextOutput(callback + '(' + JSON.stringify(result) + ');')
-    .setMimeType(ContentService.MimeType.JAVASCRIPT);
-}
-
-function createEvent_(p) {
-  const title = String(p.title || '').trim().slice(0, 120);
-  const start = new Date(String(p.start || ''));
-  const end = new Date(String(p.end || ''));
-  if (!title) throw new Error('Judul agenda wajib diisi.');
-  if (isNaN(start.getTime()) || isNaN(end.getTime()) || end <= start) throw new Error('Tanggal/jam agenda tidak valid.');
-  if (start.getTime() < Date.now() - 60000) throw new Error('Waktu agenda sudah lewat.');
-  const kind = String(p.kind || 'Lainnya').slice(0, 60);
-  const location = String(p.location || '').slice(0, 250);
-  const notes = String(p.notes || '').slice(0, 2000);
-  const description = 'Jenis agenda: ' + kind + (notes ? '\n\nCatatan / persiapan:\n' + notes : '') +
-    '\n\nDibuat melalui Sticky Note Agenda AM.';
-  const calendar = CalendarApp.getDefaultCalendar();
-  const event = calendar.createEvent('[' + kind + '] ' + title, start, end, {description, location});
-  // Google Calendar akan menangani notifikasi; aplikasi Calendar di HP harus mengizinkan notifikasi.
-  event.addPopupReminder(REMINDER_MINUTES);
-  return {event: serializeEvent_(event)};
-}
-
-function listEvents_() {
-  const calendar = CalendarApp.getDefaultCalendar();
-  const now = new Date();
-  const from = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-  const until = new Date(now.getTime() + 180 * 24 * 60 * 60 * 1000);
-  const events = calendar.getEvents(from, until).filter(ev =>
-    ev.getTitle().startsWith('[') && ev.getDescription().includes('Dibuat melalui Sticky Note Agenda AM.')
-  ).map(serializeEvent_);
-  events.sort((a,b) => new Date(a.start) - new Date(b.start));
-  return {events};
-}
-
-function deleteEvent_(p) {
-  const id = String(p.eventId || '');
-  if (!id) throw new Error('ID agenda tidak ditemukan.');
-  const event = CalendarApp.getEventById(id);
-  if (!event) throw new Error('Agenda tidak ditemukan. Muat ulang daftar agenda.');
-  if (!event.getDescription().includes('Dibuat melalui Sticky Note Agenda AM.')) {
-    throw new Error('Agenda ini bukan dibuat oleh Sticky Note Agenda AM, jadi tidak dihapus.');
-  }
-  event.deleteEvent();
-  return {deleted:true};
-}
-
-function serializeEvent_(event) {
-  const description = event.getDescription() || '';
-  const match = description.match(/Jenis agenda: ([^\n]+)/);
-  let notes = '';
-  const noteMatch = description.match(/Catatan \/ persiapan:\n([\s\S]*?)(?:\n\nDibuat melalui Sticky Note Agenda AM\.|$)/);
-  if (noteMatch) notes = noteMatch[1].trim();
-  return {
-    id:event.getId(),
-    title:event.getTitle().replace(/^\[[^\]]+\]\s*/, ''),
-    kind:match ? match[1] : 'Lainnya',
-    start:event.getStartTime().toISOString(),
-    end:event.getEndTime().toISOString(),
-    location:event.getLocation() || '',
-    notes
-  };
-}
-
-
-
-############################################################
-FILE: README.txt
-############################################################
-
-STICKY NOTE AGENDA AM — PANDUAN INSTALASI
-================================================
-
-PENTING TENTANG BIAYA DAN NOTIFIKASI
-- Target biaya Rp0.
-- GitHub Pages meng-host website.
-- Google Apps Script menghubungkan website ke Google Calendar.
-- Agenda disimpan di Google Calendar dan diberi popup reminder 24 jam (H-1).
-- Agar notifikasi muncul di HP, pasang/login ke aplikasi Google Calendar dan aktifkan notifikasi kalender.
-- Ini bukan push notification Firebase. Solusi Calendar dipilih karena penjadwalan H-1 dilakukan oleh Google Calendar tanpa perlu Firebase Cloud Functions berbayar.
-- Tidak ada sistem yang dapat menjamin notifikasi tampil jika notifikasi aplikasi dimatikan, perangkat membatasi aplikasi, atau akun tidak tersinkron.
-
-LANGKAH 1 — BUAT BACKEND GRATIS
-1. Buka https://script.google.com/ dengan akun Google yang akan dipakai untuk agenda.
-2. Klik New project.
-3. Ganti isi Code.gs dengan isi file Code.gs dari paket ini.
-4. Klik Save.
-5. Klik Deploy > New deployment.
-6. Pilih type "Web app".
-7. Execute as: Me.
-8. Who has access: Anyone.
-9. Buka Project Settings (ikon roda gigi) > Script Properties > Add script property.
-10. Buat property bernama APP_PIN dan isi dengan PIN rahasia yang kuat (jangan gunakan PIN ATM atau password penting).
-11. Klik Deploy dan izinkan akses Google Calendar ketika diminta.
-12. Salin URL Web app yang berakhiran /exec.
-
-KEAMANAN
-Web App menggunakan PIN yang disimpan di Script Properties. PIN diminta pada halaman website dan tidak ditanam di file HTML. Jangan membagikan PIN. Endpoint "Anyone" tetap dapat diakses publik, tetapi permintaan agenda harus menyertakan PIN yang benar. Gunakan PIN khusus untuk aplikasi ini, bukan password akun Google.
-
-LANGKAH 2 — HUBUNGKAN WEBSITE
-1. Buka index.html.
-2. Cari baris:
-   const APPS_SCRIPT_URL = "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE";
-3. Ganti teks PASTE... dengan URL Web App yang didapat pada Langkah 1.
-4. Simpan file.
-
-LANGKAH 3 — BUAT REPOSITORY GITHUB
-1. Di GitHub, buat repository baru bernama: sticky-note-agenda-am
-2. Untuk keamanan awal, pilih Private jika ingin menyimpan URL backend langsung di index.html. Perlu diketahui: GitHub Pages pada repository private bergantung pada jenis akun/organisasi dan pengaturan yang tersedia.
-3. Unggah index.html ke root repository. README ini boleh ikut diunggah, tetapi jangan mengunggah Code.gs bila ingin menjaga detail backend tetap terbatas.
-4. Buka Settings > Pages.
-5. Pada Build and deployment, pilih Deploy from a branch.
-6. Pilih branch main dan folder /(root), lalu Save.
-7. Tunggu proses publikasi, kemudian buka URL yang ditampilkan pada halaman Pages.
-
-PENTING: Walau repository private, jika website dipublikasikan melalui konfigurasi yang membuat halaman dapat diakses umum, URL Apps Script yang ditanam dalam JavaScript bisa dilihat dari browser. Untuk penggunaan aman, jangan simpan informasi sensitif pada kalender tersebut. Versi ini paling cocok untuk penggunaan pribadi dengan agenda non-rahasia. Bila perlu akses privat yang kuat, backend perlu autentikasi.
-
-LANGKAH 4 — AKTIFKAN NOTIFIKASI HP
-1. Pasang atau buka Google Calendar di Android.
-2. Login menggunakan akun Google yang sama.
-3. Di Google Calendar > Menu > Settings > General, pastikan Notifications aktif.
-4. Periksa juga pengaturan Android: Settings > Apps > Calendar > Notifications > Allow.
-5. Buat satu agenda percobaan minimal 1 hari ke depan dan pastikan event tampil di Google Calendar.
-6. Untuk menguji notifikasi H-1, buat agenda lebih dari 24 jam ke depan. Reminder yang ditambahkan adalah 24 jam sebelum waktu mulai agenda.
-
-FITUR
-- Dashboard agenda mendatang, agenda hari ini, dan hitungan agenda.
-- Jenis agenda: Meeting, Training, Walkthrough, Evaluasi Store, Follow Up, Personal, Lainnya.
-- Tanggal, jam, durasi, lokasi/link, catatan persiapan.
-- Sinkronisasi daftar agenda yang dibuat melalui aplikasi ini.
-- Hapus agenda yang dibuat melalui aplikasi ini.
-- Responsive untuk HP dan desktop.
-
-BATASAN VERSI AWAL
-- Agenda tersimpan di Google Calendar, bukan Firebase.
-- Reminder H-1 dibuat sebagai popup reminder Google Calendar; pengiriman dan tampilan notifikasi tergantung setelan akun/perangkat.
-- Web App Apps Script memakai URL endpoint. Untuk penggunaan luas atau data sensitif, perlu menambahkan autentikasi dan pembatasan akses.
-
-
-
