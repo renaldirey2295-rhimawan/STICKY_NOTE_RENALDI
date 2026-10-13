@@ -59,7 +59,7 @@
 SETUP: Ganti APPS_SCRIPT_URL di bawah dengan URL Web App dari Google Apps Script.
 Contoh: https://script.google.com/macros/s/AKfycb.../exec
 */
-const APPS_SCRIPT_URL = "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzWHBVo7p_sIaJjeefyuW0zs-N3An53mvSR6g-AwmMPeXEg8AvrYb9TMv-LNFY5s0Hk/exec";
 let events = [];
 let activeFilter = "upcoming";
 const $ = id => document.getElementById(id);
@@ -69,7 +69,7 @@ const dayKey = value => { const d=new Date(value); return new Intl.DateTimeForma
 const todayKey = () => dayKey(new Date());
 function api(action, params={}) {
   return new Promise((resolve,reject)=>{
-    if(!APPS_SCRIPT_URL.startsWith("https://script.google.com/macros/s/AKfycbzWHBVo7p_sIaJjeefyuW0zs-N3An53mvSR6g-AwmMPeXEg8AvrYb9TMv-LNFY5s0Hk/exec") || APPS_SCRIPT_URL.includes("PASTE_")) {
+    if(!APPS_SCRIPT_URL.startsWith("https://script.google.com/macros/s/") || APPS_SCRIPT_URL.includes("PASTE_")) {
       reject(new Error("URL Apps Script belum diatur. Isi APPS_SCRIPT_URL di bagian konfigurasi kode HTML."));
       return;
     }
